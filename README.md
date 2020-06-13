@@ -22,6 +22,7 @@ https://note.com/takuya814/n/nbee813cecabb
 * pipenv(pip install pipenv, add pipenv to PATH, where pipenv)
 * vscode
 * vscode extention(ms-python.python)
+* PostgreSQL
 
 ## install (for deploy)
 * aws-mfa(pip install aws-mfa)
@@ -31,10 +32,37 @@ ERROR: awsebcli 3.18.1 has requirement botocore<1.16,>=1.15, but you'll have bot
 ```
 * awsebcli(pip install awsebcli)
 
+## CREATE DATABASE(PostgreSQL)
+<https://qiita.com/shigechioyo/items/9b5a03ceead6e5ec87ec>
+1. 以下コマンドを実行(仮想環境から抜けている状態から)
+``` command
+psql -U postgres
+CREATE DATABASE dabubato_db;
+CREATE USER dabubato_user WITH PASSWORD 'dabubato_pass';
+ALTER ROLE dabubato_user SET client_encoding TO 'utf8';
+ALTER ROLE dabubato_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE dabubato_user SET timezone TO 'Asia/Tokyo';
+GRANT ALL PRIVILEGES ON DATABASE dabubato_db TO dabubato_user;
+\q
+```
+2. pg_hba.confを確認し、Peer認証許可の場合はパスワード認証(md5)許可に変更しPostgreSQLを再起動。
+
+## project clone
+1. リポジトリをgit clone
+2. vscodeでフォルダを開き、ターミナルを開く
+3. 以下コマンドを実行(仮想環境から抜けている状態から)
+```
+pipenv install
+pipenv shell
+python manage.py runserver
+```
+
+
+
 ## project init
 1. GitHubでリポジトリ作成しgit clone
 2. vscodeでフォルダを開き、ターミナルを開く
-3. 以下コマンドを実行
+3. 以下コマンドを実行(仮想環境から抜けている状態から)
 ``` command
 pipenv --python 3.8
 pipenv install Django
@@ -45,7 +73,8 @@ python manage.py runserver
 
 ## project first webapp
 <https://docs.djangoproject.com/ja/3.0/intro/tutorial01/>
-1. 以下コマンドを実行
+<https://qiita.com/shigechioyo/items/b7980e4f5dc62c51d2cb>
+1. 以下コマンドを実行(仮想環境から抜けている状態から)
 ``` command
 pipenv shell
 django-admin startapp dabubato
@@ -62,15 +91,24 @@ http://127.0.0.1:8000/dabubato/
 1. django-admin startappコマンド実行によりできたdabubatoフォルダに「management/commands/サブコマンド名.py」を作成
 2. python manage.py サブコマンド名
 
-## project clone
-1. リポジトリをgit clone
-2. vscodeでフォルダを開き、ターミナルを開く
-3. 以下コマンドを実行
+## setting DATABASE
+<https://qiita.com/shigechioyo/items/9b5a03ceead6e5ec87ec>
+1. 以下コマンドを実行(仮想環境から抜けている状態から)
+``` command
+pipenv install psycopg2-binary
 ```
-pipenv install
+2. config/setting.pyのDATABASES設定を修正
+1. 以下コマンドを実行(仮想環境から抜けている状態から)
+``` command
 pipenv shell
-python manage.py runserver
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+※ヒント：sから始まる
 ```
+
+
+
 
 
 ★★★TODO: 整理、どこまでgit管理すべきか（ebコマンドが.gitignoreに「.elasticbeanstalk」フォルダ配下ファイルを除外する設定を入れてくれるため、git clone時はひとまず(first only)の 3. からやればいいはず）
@@ -122,7 +160,7 @@ eb open
 4. GOTO 「env already created」
 
 ## deploy to AWS Elastic Beanstalk(env already created)
-1. pipenv shellからexitしている状態で以下コマンドを実行
+1.以下コマンドを実行(仮想環境から抜けている状態から)
 ```
 pipenv run pip freeze > requirements.txt
 ```

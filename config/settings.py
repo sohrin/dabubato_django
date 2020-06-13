@@ -25,7 +25,8 @@ SECRET_KEY = 'i44h4ey+hqwo^-o_3bt4l4d*251j!!c%*)$l3c=3o)1+rtolji'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'dabubato-django-env.eba-ghq9bmcg.ap-northeast-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = ['127.0.0.1', 'dabubato-django-env.eba-ghq9bmcg.ap-northeast-1.elasticbeanstalk.com']
 
 
 # Application definition
@@ -77,8 +78,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dabubato_db',
+        'USER': 'dabubato_user',
+        'PASSWORD': 'dabubato_pass',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -105,9 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
