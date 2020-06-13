@@ -25,7 +25,7 @@ SECRET_KEY = 'i44h4ey+hqwo^-o_3bt4l4d*251j!!c%*)$l3c=3o)1+rtolji'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dabubato-django-env.eba-ghq9bmcg.ap-northeast-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['127.0.0.1', 'dabubato-django-env.eba-ghq9bmcg.ap-northeast-1.elasticbeanstalk.com']
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # MEMO: for custom command（https://stackoverflow.com/questions/2190539/django-custom-command-not-found）
+    'dabubato'
 ]
 
 MIDDLEWARE = [

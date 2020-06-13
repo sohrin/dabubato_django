@@ -43,6 +43,25 @@ django-admin startproject config .
 python manage.py runserver
 ```
 
+## project first webapp
+<https://docs.djangoproject.com/ja/3.0/intro/tutorial01/>
+1. 以下コマンドを実行
+``` command
+pipenv shell
+django-admin startapp dabubato
+```
+2. dabubato/views.py（MVCのController）にメソッド追加
+3. dabubato/urls.pyを作成しURLマッピングを追加
+4. config/urls.pyにdabubato/urls.pyをインクルード
+5. runserver後に以下にアクセス
+http://127.0.0.1:8000/dabubato/
+
+## project first batch(custom command)
+<https://qiita.com/retasu0/items/5bd4bc9080343f9fe59f>
+<https://stackoverflow.com/questions/2190539/django-custom-command-not-found>
+1. django-admin startappコマンド実行によりできたdabubatoフォルダに「management/commands/サブコマンド名.py」を作成
+2. python manage.py サブコマンド名
+
 ## project clone
 1. リポジトリをgit clone
 2. vscodeでフォルダを開き、ターミナルを開く
