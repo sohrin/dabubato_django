@@ -1,10 +1,54 @@
 # dabubato_django
 Double Battle Management System (Django)
 
+## 懸念メモ
+* Djangoのモデルは複数プライマリーキーに対応していない。
+
+## TODO
+* PythonのJavaDoc的なもの
+* コード静的チェック
+* 型チェック
+* テーブル結合
+<https://qiita.com/chokosuki4400/items/b517a43172e2e0c71de0>
+<http://wpress.biz/django/2017/02/25/django%EF%BC%9A%E5%A4%96%E9%83%A8%E3%82%AD%E3%83%BC%E3%81%AB%E3%82%88%E3%82%8B%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E7%B5%90%E5%90%88%E3%82%92%E3%81%A4%E3%81%8B%E3%81%A3%E3%81%A6%E3%83%87%E3%83%BC/>
+<https://teratail.com/questions/219332>
+<https://qiita.com/shimayu22/items/1c0d9f0365ce6cc6488f>
+
+## TODO(二軍)
+* SP・DP・DBで1つのMstMusicとする
+
 ## memo
 * preview Markdown：［Ctrl］＋［K］→［V］
 * eb logs
 * eb ssh (input keypair pass)
+* VSCode Python Djangoの問題（エラー・警告）に対応する方法
+<https://wonwon-eater.com/vscode-python-django-lint/>
+* VS Codeのsettings.jsonの開き方
+<https://qiita.com/y-w/items/614843b259c04bb91495>
+
+## python memo
+* 【Python入門】dictionary（辞書）の使い方。基本と応用
+<https://www.sejuku.net/blog/24122>
+* 【Python入門】if文の論理演算子notの使い方をやさしく解説！
+<https://www.sejuku.net/blog/65070>
+* How do I get a python program to do nothing?
+<https://stackoverflow.com/questions/19632728/how-do-i-get-a-python-program-to-do-nothing/19632742>
+* python 配列基礎はこれで完璧！便利なメソッド多数紹介
+<https://udemy.benesse.co.jp/development/web/python-list.html>
+* Python Tips： switch 文を使いたい
+<https://www.lifewithpython.com/2018/08/python-switch-case-statement.html>
+* Pythonで自作の例外を発生させるraiseの使い方を現役エンジニアが解説【初心者向け】
+<https://techacademy.jp/magazine/22124>
+* Pythonでヌルオブジェクトの比較
+<https://qiita.com/tortuepin/items/44fdb63cc82dfd260575>
+* Python 文字列を切り取る[]
+<https://pg-chain.com/python-str-substring>
+
+## Django memo
+* モデル (Model) - データアクセスの基礎
+<https://python.keicode.com/django/model-data-access-basics.php>
+
+
 
 ## ref
 * Windows + Python + PipEnv + Visual Studio Code でPython開発環境
@@ -46,14 +90,54 @@ GRANT ALL PRIVILEGES ON DATABASE dabubato_db TO dabubato_user;
 \q
 ```
 2. pg_hba.confを確認し、Peer認証許可の場合はパスワード認証(md5)許可に変更しPostgreSQLを再起動。
+3. migrateをやり直す場合、以下を実施しデータベースを再作成、migrationsフォルダ配下の履歴pyファイルを削除してから、makemigrations、migrate、createsuperuserをやり直すこと。
+``` command
+psql -U postgres
+DROP DATABASE dabubato_db;
+CREATE DATABASE dabubato_db;
+GRANT ALL PRIVILEGES ON DATABASE dabubato_db TO dabubato_user;
+\q
+```
+
+## define MODELS
+<https://docs.djangoproject.com/ja/3.0/topics/db/models/>
+<https://docs.djangoproject.com/ja/3.0/ref/models/fields/>
+<https://32imuf.com/django/model/>
+<https://stackoverflow.com/questions/18934149/how-can-i-use-postgresqls-text-column-type-in-django>
+<https://ti-tomo-knowledge.hatenablog.com/entry/2018/05/24/083429>
+<https://eiry.bitbucket.io/tutorials/tutorial/models.html>
+<https://stackoverflow.com/questions/1545645/how-to-set-django-model-field-by-name/1545668>
+<https://qiita.com/ekzemplaro/items/377adfb74fa3517f98df>
+<https://teratail.com/questions/227263>
+<https://www.programiz.com/python-programming/datetime/current-datetime>
+<http://www.denzow.me/entry/2017/12/23/150501>
+<https://qiita.com/ekzemplaro/items/f57f3cac56cbab7d6ac8>
+<https://yaruki-strong-zero.hatenablog.jp/entry/python3_datetime_timezone_pytz>
+<https://opendata-web.site/blog/entry/22/>
+<https://qiita.com/shinno21/items/a2987d8f1e1df4f38114>
+1. appフォルダ/models.pyのモデル定義を編集
+2. 以下コマンドを実行(仮想環境から抜けている状態から)
+``` command
+python manage.py makemigrations
+python manage.py migrate
+```
 
 ## project clone
 1. リポジトリをgit clone
-2. vscodeでフォルダを開き、ターミナルを開く
-3. 以下コマンドを実行(仮想環境から抜けている状態から)
+2. vscodeのsetting.jsonに以下を追加（ctrl+, -> 右上のOpen Settings(JSON)アイコン）
+```
+"python.linting.pylintArgs": [
+    "--load-plugins=pylint_django",
+]
+```
+3. vscodeでフォルダを開き、ターミナルを開く
+4. CREATE DATABASE(PostgreSQL)作業の実施
+5. 以下コマンドを実行(仮想環境から抜けている状態から)
 ```
 pipenv install
 pipenv shell
+python manage.py migrate
+python manage.py createsuperuser
 python manage.py runserver
 ```
 
@@ -98,7 +182,7 @@ http://127.0.0.1:8000/dabubato/
 pipenv install psycopg2-binary
 ```
 2. config/setting.pyのDATABASES設定を修正
-1. 以下コマンドを実行(仮想環境から抜けている状態から)
+3. 以下コマンドを実行(仮想環境から抜けている状態から)
 ``` command
 pipenv shell
 python manage.py makemigrations
@@ -107,8 +191,19 @@ python manage.py createsuperuser
 ※ヒント：sから始まる
 ```
 
-
-
+## scraping
+<https://qiita.com/aocattleya/items/2eab8ad744d9a28fb9ce>
+<http://rongonxp.hatenablog.jp/entry/2018/02/01/000816>
+<https://blog.ikedaosushi.com/entry/2019/09/15/162445>
+<https://github.com/miyakogi/pyppeteer/issues/66>
+<https://stackoverflow.com/questions/49268423/requests-html-enconding-error>
+<https://github.com/psf/requests-html/issues/85>
+<https://gammasoft.jp/blog/how-to-download-web-page-created-javascript/>
+1. 以下コマンドを実行(仮想環境から抜けている状態から)
+``` command
+↑JavaScriptでレンダリングされるサイトをスクレイピングしたいので↓を使う
+pipenv install requests-html
+2. music-mst-mainte.pyにガリガリコーディング
 
 
 ★★★TODO: 整理、どこまでgit管理すべきか（ebコマンドが.gitignoreに「.elasticbeanstalk」フォルダ配下ファイルを除外する設定を入れてくれるため、git clone時はひとまず(first only)の 3. からやればいいはず）
