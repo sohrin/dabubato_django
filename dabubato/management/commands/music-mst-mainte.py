@@ -9,6 +9,7 @@ import math
 # python manage.py music-mst-mainte
 
 class Command(BaseCommand):
+
     def handle(self, *args, **options):
 
         # 曲リストページの配列
@@ -69,8 +70,8 @@ class Command(BaseCommand):
 
                 # 曲マスタを取得
                 old_music_mst_list = MstMusic.objects.filter(
-                    music_name = music_name,
-                    difficulty_code = music_tr_diff_code_mstcode
+                    music_name=music_name,
+                    difficulty_code=music_tr_diff_code_mstcode
                 )
                 if len(old_music_mst_list) == 0:
                     old_music_mst = None
@@ -119,14 +120,19 @@ class Command(BaseCommand):
                     music_info_top_lines = music_page_response.html.find("nobr")[0]
                     music_info_top_line_text_arr = music_info_top_lines \
                                                        .text \
-                                                       .split("\n")
+                                                       .split("\n", maxsplit=2)
                     for music_info_top_line_text in music_info_top_line_text_arr:
                         print(music_info_top_line_text)
                     music_info_style_diff = music_info_top_line_text_arr[1] \
                                                 .replace("[", "") \
                                                 .replace("]", "")
                     music_info_top_style_diff_arr = music_info_style_diff.split(" ")
+                    # V2等、曲名に改行が入る場合のため改行を空文字に置換しておく
+                    # 「V2/ TAKA」→「V2 / TAKA」対応
+                    # TODO: ★10のV2より前の曲が正しくスクレイピングできるか？
                     music_info_top_others = music_info_top_line_text_arr[2] \
+                                                .replace("\n", "") \
+                                                .replace("V2/", "V2 /") \
                                                 .replace(" bpm:", ":::::") \
                                                 .replace(" - ★", ":::::") \
                                                 .replace(" Notes:", ":::::") \
@@ -315,6 +321,8 @@ class Command(BaseCommand):
                     setattr(mst_music, "upd_date", \
                         timezone.localtime())
                     mst_music.save()
+
+                    music_page_response.close()
                     
                     # # TODO: breakしない
                     # break
