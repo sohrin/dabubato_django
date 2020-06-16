@@ -5,6 +5,8 @@ Double Battle Management System (Django)
 * Djangoのモデルは複数プライマリーキーに対応していない。
 
 ## TODO
+* モデルに__str__メソッドを追加
+<https://docs.djangoproject.com/ja/3.0/intro/tutorial02/>
 * PythonのJavaDoc的なもの
 * コード静的チェック
 * 型チェック
@@ -25,6 +27,9 @@ Double Battle Management System (Django)
 <https://wonwon-eater.com/vscode-python-django-lint/>
 * VS Codeのsettings.jsonの開き方
 <https://qiita.com/y-w/items/614843b259c04bb91495>
+* html5テンプレ
+<https://www.webprofessional.jp/a-basic-html5-template/>
+<https://qiita.com/storeG/items/80bcea89caa46e240a64>
 
 ## python memo
 * 【Python入門】dictionary（辞書）の使い方。基本と応用
@@ -122,7 +127,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-## project clone
+## project clone and run (python)
 1. リポジトリをgit clone
 2. vscodeのsetting.jsonに以下を追加（ctrl+, -> 右上のOpen Settings(JSON)アイコン）
 ```
@@ -141,6 +146,14 @@ python manage.py createsuperuser
 python manage.py runserver
 ```
 
+## project clone and run (docker-compose)
+<https://qiita.com/nokonoko_1203/items/242367a83c313a5e46bf>
+<https://shimakaze.hatenablog.com/entry/2016/01/19/165828>
+<https://github.com/psycopg/psycopg2/issues/684>
+<https://stackoverflow.com/questions/49631146/how-do-you-add-a-path-to-pythonpath-in-a-dockerfile>
+
+<https://stackoverflow.com/questions/57164656/could-not-install-the-packages-using-pipenv-when-using-docker>
+1. TODO: 後で書く
 
 
 ## project init

@@ -1,0 +1,8 @@
+.ebextensions/
+.elasticbeanstalk/
+.git/
+docker/
+.dockerignore
+.gitignore
+db.sqlite3
+docker-compose.yml

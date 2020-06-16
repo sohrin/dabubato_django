@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # MEMO: for custom command（https://stackoverflow.com/questions/2190539/django-custom-command-not-found）
+    # MEMO: モデル有効化でも必要な設定のよう。ちなみに"dabubato.DabubatoConfig"と書く方法もある様子（https://docs.djangoproject.com/ja/3.0/intro/tutorial02/）
     'dabubato'
 ]
 
