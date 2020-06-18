@@ -1,14 +1,6 @@
 version: '3.7'
 services:
-    # TODO: Nginx経由でPythonアプリにアクセスできるようにする。
-    
-    # TODO: ビルドが結構重い件をどうにかしたい・・・pipenvのinstallが重いという話もある。Poetryに移行する？
-    #       https://qiita.com/propella/items/28f2c83d1e50891b6a6b
-    #       https://qiita.com/sk217/items/43c994640f4843a18dbe
-    #       https://pod.hatenablog.com/entry/2018/01/24/033659
-    #       https://kawasin73.hatenablog.com/entry/2019/09/22/220901
-    #       Alpineだと時間がかかるという情報もある
-    #       https://qiita.com/k4ssyi/items/b8d1355fed43b526aee1
+    # TODO: Nginx経由でPythonアプリにアクセスできるようにする（Nginx＆Gunicorn）。
     # TODO: .env配置例
     #       https://qiita.com/mokemokechicken/items/d7384a4d8cdc344e7b4a
     django:
@@ -16,23 +8,14 @@ services:
           context: ./
           dockerfile: ./docker/django/Dockerfile
         container_name: dabubato_django
-        command: >
-            sh -c "
-                pipenv run python manage.py migrate
-             && pipenv run python manage.py runserver 0.0.0.0:8000
-            "
+        command: sh -c "dockerize -timeout 300s -wait tcp://postgres:5432 -wait-retry-interval 5s pipenv run python /usr/src/app/manage.py migrate && pipenv run python /usr/src/app/manage.py runserver 0.0.0.0:8000"
         expose: 
           - "8000"
+        ports:
+        - "8000:8000"
         environment:
-            # TODO: 不要であれば消す
-#            - DEBUG=1
-#            - SECRET_KEY=hoge
-            - DATABASE_ENGINE=django.db.backends.postgresql_psycopg2
-            - DATABASE_DB=dabubato_db
-            - DATABASE_USER=dabubato_user
-            - DATABASE_PASSWORD=dabubato_pass
+            - DEBUG=1
             - DATABASE_HOST=postgres
-            - DATABASE_PORT=55432
     postgres:
         build: ./docker/postgres/
         container_name: dabubato_postgres

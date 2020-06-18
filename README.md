@@ -15,6 +15,7 @@ Double Battle Management System (Django)
 <http://wpress.biz/django/2017/02/25/django%EF%BC%9A%E5%A4%96%E9%83%A8%E3%82%AD%E3%83%BC%E3%81%AB%E3%82%88%E3%82%8B%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB%E7%B5%90%E5%90%88%E3%82%92%E3%81%A4%E3%81%8B%E3%81%A3%E3%81%A6%E3%83%87%E3%83%BC/>
 <https://teratail.com/questions/219332>
 <https://qiita.com/shimayu22/items/1c0d9f0365ce6cc6488f>
+* django-environ等、環境変数管理の導入
 
 ## TODO(二軍)
 * SP・DP・DBで1つのMstMusicとする
@@ -147,12 +148,17 @@ python manage.py runserver
 ```
 
 ## project clone and run (docker-compose)
+<https://qiita.com/k4ssyi/items/b8d1355fed43b526aee1>
 <https://qiita.com/nokonoko_1203/items/242367a83c313a5e46bf>
 <https://shimakaze.hatenablog.com/entry/2016/01/19/165828>
 <https://github.com/psycopg/psycopg2/issues/684>
 <https://stackoverflow.com/questions/49631146/how-do-you-add-a-path-to-pythonpath-in-a-dockerfile>
-
 <https://stackoverflow.com/questions/57164656/could-not-install-the-packages-using-pipenv-when-using-docker>
+<https://qiita.com/youcune/items/5b783f7fde45d0fd4b35>
+<https://qiita.com/Aruneko/items/971e65a945d23f7bb8b6>
+<https://note.nkmk.me/python-os-environ-getenv/>
+<https://qiita.com/okoppe8/items/d7852439f18fede10ca6>
+<https://e-tec-memo.herokuapp.com/article/172/>
 1. TODO: 後で書く
 
 

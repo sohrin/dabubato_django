@@ -83,8 +83,9 @@ DATABASES = {
         'NAME': 'dabubato_db',
         'USER': 'dabubato_user',
         'PASSWORD': 'dabubato_pass',
-        'HOST': 'localhost',
-        'PORT': '',
+        # MEMO: docker-compose起動時はサービス名がホストとなるため、環境変数で設定可能としている。
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+        'PORT': '5432',
     }
 }
 
